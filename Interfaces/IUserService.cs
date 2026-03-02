@@ -4,7 +4,7 @@ using AppBackEnd.DTO;
 namespace AppBackEnd.Interfaces
 {
     public interface IUserService
-    {
+    { //ad sa korisnicima u aplikaciji, kao što su registracija, ažuriranje, brisanje, pretraga korisnika, kao i za promenu uloga korisnika i rad sa povezanim podacima
         public Task<bool> RegisterUser(User User);
         public Task<bool> TakenEmail(string email);
         public Task<User?> GetUserByEmail(string email);

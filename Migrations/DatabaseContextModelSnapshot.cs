@@ -367,7 +367,7 @@ namespace AppBackEnd.Migrations
                     b.HasOne("AppBackEnd.Data.Painter", "Painter")
                         .WithMany("Artworks")
                         .HasForeignKey("PainterId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("AppBackEnd.Data.Theme", "Theme")
@@ -386,13 +386,13 @@ namespace AppBackEnd.Migrations
                     b.HasOne("AppBackEnd.Data.Artwork", "Artwork")
                         .WithMany()
                         .HasForeignKey("ArtworkId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("AppBackEnd.Data.JuryMember", "JuryMember")
                         .WithMany()
                         .HasForeignKey("JuryMemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Artwork");
@@ -414,13 +414,13 @@ namespace AppBackEnd.Migrations
                     b.HasOne("AppBackEnd.Data.Artwork", "Artwork")
                         .WithMany()
                         .HasForeignKey("ArtworkId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("AppBackEnd.Data.Exhibition", "Exhibition")
                         .WithMany()
                         .HasForeignKey("ExhibitionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Artwork");
@@ -442,7 +442,7 @@ namespace AppBackEnd.Migrations
                     b.HasOne("AppBackEnd.Data.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -453,13 +453,13 @@ namespace AppBackEnd.Migrations
                     b.HasOne("AppBackEnd.Data.Exhibition", "Exhibition")
                         .WithMany("Visits")
                         .HasForeignKey("ExhibitionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("AppBackEnd.Data.Journalist", "Journalist")
                         .WithMany()
                         .HasForeignKey("JournalistId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Exhibition");
@@ -472,7 +472,7 @@ namespace AppBackEnd.Migrations
                     b.HasOne("AppBackEnd.Data.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -487,7 +487,7 @@ namespace AppBackEnd.Migrations
                     b.HasOne("AppBackEnd.Data.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("City");

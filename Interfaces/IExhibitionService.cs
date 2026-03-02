@@ -4,7 +4,8 @@ using AppBackEnd.DTO;
 namespace AppBackEnd.Interfaces
 {
     public interface IExhibitionService
-    {
+    { //rad sa izlobama 
+        //obavljanje raznih operacija na izložbama, kao što su pretraga, dodavanje slika, brisanje, ažuriranje
 
         public Task<List<Exhibition>> GetAllExhibitions();
         public Task<Exhibition?> GetExhibitionById(int id);

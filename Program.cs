@@ -51,16 +51,17 @@ builder.Services.AddAuthentication(options =>
 });
 
 // Konfiguracija CORS-a
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowSpecificOrigins", builder =>
-//    {
-//        builder.WithOrigins("http://localhost:4200") // Frontend URL
-//               .AllowAnyHeader()
-//               .AllowAnyMethod()
-//               .AllowCredentials();
-//    });
-//});
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
 
 builder.Services.AddCors();
 

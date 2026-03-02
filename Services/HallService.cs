@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
 namespace AppBackEnd.Services
-{
+{ //upravlja podacima o salama u bazi podataka. Salama može biti povezana s gradom i izložbama, a servis omogućava kreiranje, ažuriranje, brisanje i pretragu sala.
     public class HallService : IHallService
     {
         private readonly DatabaseContext database;

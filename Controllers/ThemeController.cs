@@ -22,13 +22,13 @@ namespace AppBackEnd.Controllers
             this.themeService = themeService;
             this.mapper = mapper;
         }
-        [HttpGet]
+        [HttpGet] //dohvatanje svih tema
         public async Task<IActionResult> GetAll()
         {
            
             return Ok(mapper.Map<List<ThemeResponseDTO>>(await themeService.GetAllThemes()));
         }
-        [HttpGet("{id}")]
+        [HttpGet("{id}")] //dohvatanje tema po ID
         public async Task<IActionResult> GetById(int id)
         {
             if (User == null || !User.Identity.IsAuthenticated)
@@ -51,10 +51,11 @@ namespace AppBackEnd.Controllers
                 return BadRequest(new { Message = $"Theme with ID={id} doesn't exist." });
             }
         }
-        [HttpPost]
+        [HttpPost] //kreiranje nove teme
         public async Task<IActionResult> CreateTask([FromForm] string themeName)
         {
-            if (User == null || !User.Identity.IsAuthenticated)
+            //provera uloge korisnika
+            if (User == null || (User.Identity != null && User.Identity.IsAuthenticated))
             {
                 return StatusCode(StatusCodes.Status403Forbidden, new { Message = "You don't have access." });
             }
@@ -82,7 +83,7 @@ namespace AppBackEnd.Controllers
                 }
             }
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}")] //brisanje tema prema ID, aut korisnika, provera uloge k, provera postojanja teme
         public async Task<IActionResult> DeleteThemeById([FromRoute] int id)
         {
             if (User == null || !User.Identity.IsAuthenticated)
@@ -115,7 +116,7 @@ namespace AppBackEnd.Controllers
                 }
             }
         }
-        [HttpPut("{id}")]
+        [HttpPut("{id}")] //azuriranje podataka o temi
         public async Task<IActionResult> UpdateTheme([FromRoute] int id, [FromForm] string themeName)
         {
             if (User == null || !User.Identity.IsAuthenticated)

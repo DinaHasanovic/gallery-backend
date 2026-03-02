@@ -4,7 +4,7 @@ using AppBackEnd.DTO;
 namespace AppBackEnd.Interfaces
 {
     public interface ICityService
-    {
+    { //dobijanje informacija o gradovima, dodavanje novih gradova, ažuriranje i brisanje postojećih gradova.
         public Task<List<City>> GetCities();
         public Task<City?> GetCityById(int id);
         public Task<City?> GetCityByPTT(string PTT);

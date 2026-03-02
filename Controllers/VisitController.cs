@@ -24,12 +24,12 @@ namespace AppBackEnd.Controllers
             this.visitService = vs;
             this.mapper = m;
         }
-        [HttpGet]
+        [HttpGet] //svi podaci o posetama
         public async Task<IActionResult> GetAll() {
             
             return Ok(mapper.Map<List<VisitResponseDTO>>(await visitService.GetAll()));
         }
-        [HttpPost]
+        [HttpPost]//kreiranje nove posete od novinara, provera aut i aut, da li izlozba postoji, datum, da li je novinar validan
         public async Task<IActionResult> Create([FromForm] CreateVisitRequestDTO request)
         {
 
@@ -80,7 +80,7 @@ namespace AppBackEnd.Controllers
                 return BadRequest(new { Message = "There was an error while creating a visit." });
             }
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}")] //novinar brise svoju posetu
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             if (User == null || !User.Identity.IsAuthenticated)
@@ -113,7 +113,7 @@ namespace AppBackEnd.Controllers
                 return BadRequest(new { Message = "There was an error while deleting visit." });
             }
         }
-        [HttpGet("{journalistId}")]
+        [HttpGet("{journalistId}")]//dobijanje svih poseta koje je napravio odredjeni novinar
         public async Task<IActionResult> GetByJournalist([FromRoute] int journalistId)
         {
             User? user = await userService.GetUserById(journalistId);

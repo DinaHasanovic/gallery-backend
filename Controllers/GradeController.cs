@@ -74,9 +74,10 @@ namespace AppBackEnd.Controllers
                 return Ok(mapper.Map<GradeResponseDTO>(grade));
             }
         }
+        //POST zahtev za kreiranje ocene za umetničko delo.
         [HttpPost]
         public async Task<IActionResult> CreateGrade([FromForm] CreateGradeRequestDTO request)
-        {
+        {//provera autentifikacije i autorizacije korisnika
             if (User == null || !User.Identity.IsAuthenticated)
             {
                 return StatusCode(StatusCodes.Status403Forbidden, new { Message = "You don't have access." });
@@ -88,20 +89,25 @@ namespace AppBackEnd.Controllers
                 return StatusCode(StatusCodes.Status403Forbidden, new { Message = "You don't have access." });
             }
 
-            User? user = await userService.GetUserById(request.JuryMemberId);
-            if(user == null)
+            var userIdFromToken = int.Parse(User.FindFirst("id")?.Value!);
+
+            User? user = await userService.GetUserById(userIdFromToken);
+
+            Console.WriteLine(user.Role != (int)UserRoles.JuryMember);
+            if (user == null)
             {
                 return BadRequest(new { Message = $"There is no user with id {request.JuryMemberId}" });
             }
             else if(user.Role != (int)UserRoles.JuryMember)
             {
-                return BadRequest(new { Message = $"User with id {request.JuryMemberId} is not registered as jury member."});
-            }
+                return BadRequest(new { Message = $"User with id {request.JuryMemberId}({user.Role}) is not registered as jury member."});
+            } //provera podataka o ziriju
             JuryMember? juryMember = await userService.GetJuryMemberData(request.JuryMemberId);
             if (juryMember == null)
             {
                 return BadRequest(new { Message = $"User with ID = {request.JuryMemberId} is not registered as jury member." });
             }
+            //provera da li je ocena vec dodeljena
             List<ArtworkGrade> grades = await gradeService.GetAllGradesByJuryMember(juryMember.Id);
             ArtworkGrade? check = grades.Where(g => g.ArtworkId == request.ArtworkId).FirstOrDefault();
             if (check != null)
@@ -109,6 +115,7 @@ namespace AppBackEnd.Controllers
                 await gradeService.UpdateGrade(check.Id, request.Points);
                 return Ok(new { Message = "Grade has been updated" });
             }
+            //kreiranje nove ocene
             request.JuryMemberId = juryMember.Id;
             ArtworkGrade grade = mapper.Map<ArtworkGrade>(request);
             bool result = await gradeService.CreateGrade(grade);
@@ -121,7 +128,7 @@ namespace AppBackEnd.Controllers
                 return BadRequest(new { Message = "There was an error while creating grade" });
             }
         }
-        [HttpPut("{id}")]
+        [HttpPut("{id}")] //azuriranje ocene za umetnicko delo
         public async Task<IActionResult> UpdateGrade([FromRoute] int id, [FromForm] int newGrade)
         {
             if (User == null || !User.Identity.IsAuthenticated)
@@ -160,7 +167,7 @@ namespace AppBackEnd.Controllers
                 }
             }
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}")] //brisanje ocene
         public async Task<IActionResult> DeleteGrade([FromRoute] int id) {
             if (User == null || !User.Identity.IsAuthenticated)
             {
@@ -190,6 +197,7 @@ namespace AppBackEnd.Controllers
                 }
             }
         }
+        // prosečnu ocenu za umetničko delo na osnovu svih ocena dodeljenih tom delu
         [HttpGet("averageGrade/{artworkId}")]
         public async Task<IActionResult> GetAverageGrade([FromRoute] int artworkId)
         {

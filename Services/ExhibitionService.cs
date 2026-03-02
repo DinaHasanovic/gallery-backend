@@ -4,7 +4,7 @@ using AppBackEnd.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppBackEnd.Services
-{
+{ // upravljanje izložbama u bazi podataka. Servis sadrži niz metoda koje omogućavaju kreiranje, ažuriranje, brisanje, dodavanje i uklanjanje slika u okviru izložbi, kao i različite načine filtriranja i pretrage izložbi 
     public class ExhibitionService : IExhibitionService
     {
         private readonly DatabaseContext db;
@@ -33,6 +33,12 @@ namespace AppBackEnd.Services
                     }
                     else
                     {
+                        var exhibitionArtwork = new ExhibitionArtwork
+                        {
+                            ArtworkId = artworkId,
+                            ExhibitionId = exhibitionId
+                        };
+                        await db.ExhibitionsArtworks.AddAsync(exhibitionArtwork);
                         exhibition.Artworks.Add(artwork);
                         await db.SaveChangesAsync();
                         return true;
@@ -219,6 +225,12 @@ namespace AppBackEnd.Services
                     }
                     else
                     {
+                        var artworkExhibition = await db.ExhibitionsArtworks.Where( a => a.ArtworkId == artworkId && a.ExhibitionId == exhibitionId).FirstOrDefaultAsync();
+                        if (artworkExhibition == null) {
+                            return false;
+                        }
+                        
+                        db.ExhibitionsArtworks.Remove(artworkExhibition);
                         exhibition.Artworks.Remove(artwork);
                         await db.SaveChangesAsync();
                         return true;

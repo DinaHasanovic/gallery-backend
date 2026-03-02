@@ -3,7 +3,7 @@
 namespace AppBackEnd.Interfaces
 {
     public interface IArtworkGradeService
-    {
+    { // skup operacija za upravljanje ocenama umetničkih dela
         public Task<List<ArtworkGrade>> GetAllGrades();
         public Task<List<ArtworkGrade>> GetAllGradesByArtwork(int artworkId);
         public Task<List<ArtworkGrade>> GetAllGradesByJuryMember(int juryMemberId);

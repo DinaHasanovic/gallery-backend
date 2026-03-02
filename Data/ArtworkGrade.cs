@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace AppBackEnd.Data
 {
     public class ArtworkGrade
-    {
+    { //model za ocene umetnickog dela koji dodeljuju clanovi zirija
         public int Id { get; set; }
 
         [ForeignKey(nameof(Artwork))]

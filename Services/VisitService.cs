@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace AppBackEnd.Services
 {
     public class VisitService : IVisitService
-    {
+    { //upravljanje posetama novinara na izložbama u okviru aplikacije. Pruža osnovne funkcionalnosti kao što su kreiranje, brisanje i pretraga poseta,
         private readonly DatabaseContext db;
 
         public VisitService(DatabaseContext db)

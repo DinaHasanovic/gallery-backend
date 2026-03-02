@@ -15,7 +15,7 @@ namespace AppBackEnd.Data
         [Required]
         public string Password { get; set; }
         [Required]
-        public int Role { get; set; } = 0;
+        public int Role { get; set; }
 
     }
 }

@@ -3,7 +3,7 @@
 namespace AppBackEnd.Interfaces
 {
     public interface IHallService
-    {
+    { //pretraga, kreacija, ažuriranje, brisanje i filtriranje hala.
         public Task<List<Hall>> GetAllHalls();
         public Task<Hall?> GetHallById(int id);
         public Task<bool> CreateHall(Hall hall);

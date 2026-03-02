@@ -23,7 +23,7 @@ namespace AppBackEnd.Controllers
             this.hallService = service;
             this.cityService = cityService;
         }
-        [HttpGet]
+        [HttpGet] //dobijanje svih sala ili sala po ID
         public async Task<IActionResult> GetAllHalls()
         {
 
@@ -34,7 +34,7 @@ namespace AppBackEnd.Controllers
         {
             return Ok(mapper.Map<HallResponseDTO>(await hallService.GetHallById(id)));
         }
-        [HttpPost]
+        [HttpPost] //kreiranje nove sale, aut i aut
         public async Task<IActionResult> CreateHall([FromForm] CreateHallRequestDTO hall)
         {
             if (User == null || !User.Identity.IsAuthenticated)
@@ -65,7 +65,7 @@ namespace AppBackEnd.Controllers
                 return BadRequest(new { Message = ex.Message });
             }
         }
-        [HttpPut]
+        [HttpPut] //aut i aut, azuriranje sale, provera grada, obrada gresaka
         public async Task<IActionResult> UpdateCity([FromForm] UpdateHallRequestDTO request)
         {
             if (User == null || !User.Identity.IsAuthenticated)
@@ -112,7 +112,7 @@ namespace AppBackEnd.Controllers
                     }
             }
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}")] //brisanje sale
         public async Task<IActionResult> DeleteHall([FromRoute] int id)
         {
             if (User == null || !User.Identity.IsAuthenticated)
@@ -152,6 +152,7 @@ namespace AppBackEnd.Controllers
                 return BadRequest(new { Message = ex.Message });
             }
         }
+        //pretraga grada prema Id, pretraga sala prema ID
         [HttpGet("hallsByCity/{cityId}")]
         public async Task<IActionResult> GetHallsByCity([FromRoute] int cityId)
         {
@@ -159,11 +160,11 @@ namespace AppBackEnd.Controllers
             if(city == null)
             {
                 return BadRequest(new { Message = $"City with ID={cityId} doesn't exist" });
-            }
+            }//vracanje odg
             return Ok(mapper.Map<List<HallResponseDTO>>(await hallService.GetHallsByCityId(cityId)));
 
         }
-        [HttpGet("hallsByNameSearch")]
+        [HttpGet("hallsByNameSearch")] //pretraga sala po imenu garda
         public async Task<IActionResult> GetHallsByCity([FromQuery] string cityName)
         {
             return Ok(mapper.Map<List<HallResponseDTO>>(await hallService.GetHallByNameSearch(cityName)));

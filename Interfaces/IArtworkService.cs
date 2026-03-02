@@ -4,7 +4,7 @@ using AppBackEnd.DTO;
 namespace AppBackEnd.Interfaces
 {
     public interface IArtworkService
-    {
+    { //dobijanje svih umetničkih dela, dodavanje, ažuriranje, brisanje i pretraga umetničkih dela
         public Task<List<Artwork>> GetAllArtworks();
         public Task<Artwork?> GetArtworkById(int id);
         public Task<List<Artwork>> GetArtworksByArtistId(int artistId);

@@ -12,6 +12,7 @@ namespace AppBackEnd.Controllers
     [ApiController]
     public class ArtworksController : ControllerBase
     {
+        //dependency injection kako bi odvojili logiku poslovanja od kontrolera
         private readonly IMapper mapper;
         private readonly IArtworkService artworkService;
         private readonly IUserService userService;

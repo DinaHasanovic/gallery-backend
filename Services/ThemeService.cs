@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace AppBackEnd.Services
 {
     public class ThemeService : IThemeService
-    {
+    { //pravlja temama u bazi podataka. Tema može biti povezana sa umetničkim delima
         private readonly DatabaseContext db;
 
         public ThemeService(DatabaseContext db)

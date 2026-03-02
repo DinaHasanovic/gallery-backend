@@ -1,7 +1,7 @@
 ﻿using AppBackEnd.Data;
 
 namespace AppBackEnd.Interfaces
-{
+{// upravljanje posetama novinara u aplikaciji. Posete novinara su povezane sa izložbama i omogućavaju novinarima da evidentiraju svoj dolazak 
     public interface IVisitService
     {
         public Task<JournalistVisit?> GetVisitById(int id);

@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 namespace AppBackEnd.Services
 {
     public class ArtworkGradeService : IArtworkGradeService
-    {
+    { //pravljanje ocenama umetničkih dela, omogućavajući efikasno dodavanje, pretragu, ažuriranje i brisanje ocena.
         private readonly DatabaseContext db;
 
         public ArtworkGradeService(DatabaseContext db)

@@ -90,7 +90,7 @@ namespace AppBackEnd.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -110,7 +110,7 @@ namespace AppBackEnd.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -136,7 +136,7 @@ namespace AppBackEnd.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -193,7 +193,7 @@ namespace AppBackEnd.Migrations
                         column: x => x.PainterId,
                         principalTable: "Painters",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Artworks_Themes_ThemeId",
                         column: x => x.ThemeId,
@@ -219,13 +219,13 @@ namespace AppBackEnd.Migrations
                         column: x => x.ExhibitionId,
                         principalTable: "Exhibitions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Visits_Journalists_JournalistId",
                         column: x => x.JournalistId,
                         principalTable: "Journalists",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -245,13 +245,13 @@ namespace AppBackEnd.Migrations
                         column: x => x.ArtworkId,
                         principalTable: "Artworks",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_ExhibitionsArtworks_Exhibitions_ExhibitionId",
                         column: x => x.ExhibitionId,
                         principalTable: "Exhibitions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -272,13 +272,13 @@ namespace AppBackEnd.Migrations
                         column: x => x.ArtworkId,
                         principalTable: "Artworks",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Grades_JuryMembers_JuryMemberId",
                         column: x => x.JuryMemberId,
                         principalTable: "JuryMembers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(

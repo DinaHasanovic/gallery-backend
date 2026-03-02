@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace AppBackEnd.Services
 {
     public class CityService : ICityService
-    {
+    { // upravljanje gradovima u bazi podataka. Klasu CityService koristi Entity Framework za izvršenje CRUD operacija nad gradovima, kao i povezanim salama 
         private readonly DatabaseContext _databaseContext;
         private readonly IHallService _hallService;
 

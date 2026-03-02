@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 namespace AppBackEnd.Services
 {
     public class ArtworkService : IArtworkService
-    {
+    { //pravljanje umetničkim delima u aplikaciji, jer omogućava lako dodavanje, pretragu, ažuriranje i brisanje umetničkih dela osigurava validaciju i integritet podataka.
         private readonly DatabaseContext database;
 
         public ArtworkService(DatabaseContext db)

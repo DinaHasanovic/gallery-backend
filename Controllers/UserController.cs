@@ -21,7 +21,7 @@ namespace AppBackEnd.Controllers
             this.userService = userService;
             this.mapper = mapper;
         }
-        [HttpGet("getAllUsers")]
+        [HttpGet("getAllUsers")] //dobijanje svih korisnika iz sistema
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await userService.GetAllUsers();
@@ -34,7 +34,7 @@ namespace AppBackEnd.Controllers
             return Ok(mapper.Map<List<UserSearchResponseDTO>>(await userService.GetAllUsers()));
         }
 
-        [HttpGet("getUserByEmail/{email}")]
+        [HttpGet("getUserByEmail/{email}")] //dobijanje korsinika na osnovu njegovog emaila
         public async Task<IActionResult> GetUserByEmail([FromRoute] string email)
         {
             User? user = await userService.GetUserByEmail(email);
@@ -50,7 +50,7 @@ namespace AppBackEnd.Controllers
 
         }
 
-        [HttpGet("getUserById/{id}")]
+        [HttpGet("getUserById/{id}")]//na osnovu ID
         public async Task<IActionResult> GetUserById([FromRoute] int id)
         {
             User? user = await userService.GetUserById(id);
@@ -64,7 +64,7 @@ namespace AppBackEnd.Controllers
                 return Ok(mapper.Map<UserSearchResponseDTO>(user));
             }
         }
-        [HttpPost("registerUser")]
+        [HttpPost("registerUser")]//registracija novog korisnika
         public async Task<IActionResult> RegisterUser([FromForm] RegisterUserRequestDTO request)
         {
             bool takenEmail = await userService.TakenEmail(request.Email);
@@ -85,7 +85,7 @@ namespace AppBackEnd.Controllers
             }
         }
 
-        [HttpPost("loginUser")]
+        [HttpPost("loginUser")]//prijava korisnika
         public async Task<IActionResult> LoginUser([FromForm] LoginUserRequestDTO request)
         {
             User? user = await userService.GetUserByEmail(request.Email);
@@ -98,7 +98,7 @@ namespace AppBackEnd.Controllers
             {
                 return BadRequest(new { Message = "Incorrect password." });
             }
-
+            //generisanja JWT tokena
             string token = userService.GenerateToken(user);
 
             switch (user.Role)
@@ -150,7 +150,7 @@ namespace AppBackEnd.Controllers
             }
         }
 
-        [HttpPut("updateToVisitor/{id}")]
+        [HttpPut("updateToVisitor/{id}")] //mogućava adminu da ažurira korisnika i dodeli mu ulogu Visitor
         public async Task<IActionResult> UpdateToVisitor([FromRoute] int id)
         {
             if (User == null || !User.Identity.IsAuthenticated)
@@ -198,7 +198,7 @@ namespace AppBackEnd.Controllers
             return Ok(new { Message = "User updated to journalist successfully."});
         }
         
-        [HttpPut("updateToJury/{id}")]
+        [HttpPut("updateToJury/{id}")] //omogućava adminu da ažurira korisnika i dodeli mu ulogu Jury Member (član žirija). 
         public async Task<IActionResult> UpdateToJury([FromRoute] int id, [FromForm] string JMBG)
         {
             if (User == null || !User.Identity.IsAuthenticated)
@@ -227,7 +227,7 @@ namespace AppBackEnd.Controllers
             return Ok(new { Message = "User updated to Jury Member successfully." });
         }
 
-        [HttpPut("updateToPainter/{id}")]
+        [HttpPut("updateToPainter/{id}")] //omogućava adminu da ažurira korisnika i dodeli mu ulogu Painter (slikar). 
         public async Task<IActionResult> UpdateToPainter([FromRoute] int id, [FromForm] UpdateToPainterRequestDTO request)
         {
             Painter? painter = await userService.GetPainterWithJMBG(request.JMBG);
@@ -243,7 +243,7 @@ namespace AppBackEnd.Controllers
             }
             return Ok(new { Message = "User updated to Painter successfully." });
         }
-        [HttpPut("updateUser/{id}")]
+        [HttpPut("updateUser/{id}")] // adminu da ažurira podatke korisnika na osnovu korisničkog ID-a.
         public async Task<IActionResult> UpdateUser([FromRoute] int id, [FromForm] UpdateUserRequestDTO request)
         {
             if (User == null || !User.Identity.IsAuthenticated)
@@ -273,7 +273,7 @@ namespace AppBackEnd.Controllers
             }
         }
 
-        [HttpGet("searchByEmail")]
+        [HttpGet("searchByEmail")] //omogućava adminu da pretraži korisnike prema njihovoj email adresi
         public async Task<IActionResult> SearchUsersByEmail([FromQuery] string? email)
         {
             if (User == null || !User.Identity.IsAuthenticated)
@@ -298,7 +298,7 @@ namespace AppBackEnd.Controllers
             return Ok(mapper.Map<List<UserSearchResponseDTO>>(await userService.SearchUsersByEmail(email.Trim())));
                 
         }
-        [HttpPut("updateToAdministrator/{id}")]
+        [HttpPut("updateToAdministrator/{id}")] //omogućava adminu da korisnika promeni u Administratora.
         public async Task<IActionResult> UpdateUserToAdmin([FromRoute] int id)
         {
             if (User == null || !User.Identity.IsAuthenticated)
@@ -319,13 +319,13 @@ namespace AppBackEnd.Controllers
             }
             return Ok(new { Message = "User updated to Administrator successfully." });
         }
-        [HttpGet("getUsersByRole/{role}")]
+        [HttpGet("getUsersByRole/{role}")] //pretragu korisnika na osnovu njihove uloge.
         public async Task<IActionResult> GetUsersByRole([FromRoute] int role)
         {
          
             return Ok(mapper.Map<List<UserSearchResponseDTO>>(await userService.GetUsersByRole(role)));
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}")] // brisanje korisnika na osnovu njihovog ID-a
         public async Task<IActionResult> DeleteUser([FromRoute] int id)
         {
             if (User == null || !User.Identity.IsAuthenticated)
@@ -349,7 +349,7 @@ namespace AppBackEnd.Controllers
                 return Ok(new { Message = "User has been successfully deleted." });
             }
         }
-        [HttpGet("getPainterData/{userId}")]
+        [HttpGet("getPainterData/{userId}")] //dobijanje podataka o Painter korisniku na osnovu userId.
         public async Task<IActionResult> GetPainterData([FromRoute] int userId)
         {
             if (User == null || !User.Identity.IsAuthenticated)
@@ -375,7 +375,7 @@ namespace AppBackEnd.Controllers
             }
             return Ok(new { JMBG = painter.JMBG, cityId = painter.CityId });
         }
-        [HttpGet("getJournalistData/{userId}")]
+        [HttpGet("getJournalistData/{userId}")] //dobijanje podataka o Journalist korisniku na osnovu userId. 
         public async Task<IActionResult> GetJournalistData([FromRoute] int userId)
         {
             if (User == null || !User.Identity.IsAuthenticated)
@@ -402,7 +402,7 @@ namespace AppBackEnd.Controllers
             return Ok(new { agency = journalist.Agency});
         }
 
-        [HttpGet("getJuryMemberData/{userId}")]
+        [HttpGet("getJuryMemberData/{userId}")] //pristup podacima o Jury Member korisniku na osnovu userId.
         public async Task<IActionResult> GetJuryMemberData([FromRoute] int userId)
         {
             if (User == null || !User.Identity.IsAuthenticated)
@@ -429,6 +429,7 @@ namespace AppBackEnd.Controllers
             return Ok(new { JMBG=juryMember.JMBG });
         }
         [HttpGet("paintersUser/{painterId}")]
+        //omogućava administratorima da dobiju podatke o korisniku koji je vezan za Painter korisnika na osnovu painterId
         public async Task<IActionResult> GetPaintersUser([FromRoute] int painterId)
         {
             if (User == null || !User.Identity.IsAuthenticated)

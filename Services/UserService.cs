@@ -8,7 +8,8 @@ using System.Security.Claims;
 using System.Text;
 
 namespace AppBackEnd.Services
-{
+{ //upravljanje korisnicima u sistemu. Obuhvata operacije poput kreiranja korisnika, generisanja tokena,
+  //ažuriranja podataka korisnika, promene uloge korisnika, te brisanja korisnika i povezanim podacima 
     public class UserService : IUserService
     {
         private readonly DatabaseContext db;
@@ -264,6 +265,7 @@ namespace AppBackEnd.Services
                 }
                 user.Role = (int)UserRoles.Journalist;
 
+
                 Journalist journalist = new Journalist
                 {
                     UserId = user.Id,
@@ -311,7 +313,7 @@ namespace AppBackEnd.Services
                 JMBG = JMBG
             };
 
-            db.JuryMembers.Add(juryMember);
+            await db.JuryMembers.AddAsync(juryMember);
 
             await db.SaveChangesAsync();
 
